@@ -1,0 +1,30 @@
+# cache 1 month for image
+<filesMatch ".(jpg|jpeg|png|gif)$">
+	Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
+<ifModule mod_headers.c>
+    Header set Connection keep-alive
+</ifModule>
+
+Options +FollowSymlinks
+RewriteEngine On
+
+# deal with admin first
+RewriteCond %{REQUEST_URI} ^/mira/(admin)
+RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
+RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/mira/backend/web/(assets|css)/
+RewriteCond %{REQUEST_URI} ^/mira/(admin)
+RewriteRule ^.*$ backend/web/index.php [L]
+
+RewriteCond %{REQUEST_URI} ^/mira/(assets|css)
+RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/salamanca/(frontend|backend)/web/(assets|css)/
+RewriteCond %{REQUEST_URI} !index.php
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ frontend/web/index.php
