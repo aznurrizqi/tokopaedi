@@ -71,8 +71,8 @@ class ProductSearch extends Product
     }
 
     public function getProductList(){
-    	$query = ArrayHelper::map(Product::find()->all(), 'id', function($model){
-    			return $model->product_name;
+    	$query = ArrayHelper::map(Product::find()->orderBy(['product_name' => SORT_ASC])->all(), 'id', function($model){
+            return $model->product_name;
     	});
     	return $query;
     }

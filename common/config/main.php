@@ -21,7 +21,11 @@ return [
             // 'class' => 'mdm\admin\models\User',
             'identityClass' => 'mdm\admin\models\User',
             'loginUrl' => ['admin/user/login'],
-        ]
+        ],
+        'formatter' => [
+            'thousandSeparator' => ',',
+            'currencyCode' => 'IDR',
+        ],
     //     'view' => [
     //         'theme' => [
     //             'pathMap' => [

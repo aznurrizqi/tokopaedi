@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "purchase".
@@ -50,7 +51,7 @@ class Purchase extends \yii\db\ActiveRecord
             [['purchase_price'], 'number'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['supplier_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['supplier_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Supplier::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -62,7 +63,7 @@ class Purchase extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'amount' => 'Jumlah',
-            'purchase_price' => 'Harga Beli',
+            'purchase_price' => 'Harga Beli per Unit',
             'product_id' => 'Barang',
             'supplier_id' => 'Pemasok',
             'user_id' => 'Pengguna',

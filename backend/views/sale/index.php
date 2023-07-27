@@ -1,8 +1,12 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\models\Product;
+use common\models\Customer;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\SaleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -31,11 +35,31 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 
-                            'product_id',
+                            [
+                                'attribute' => 'product_id',
+                                'format' => 'raw',
+                                'filter' => Html::activeDropDownList($searchModel, 'product_id', ArrayHelper::map(Product::find()->all(), 'id', 'product_name'), ['prompt' => 'Semua Barang', 'class' => 'form-control']),
+                                'value' => function ($model) {
+                                    return $model->product->product_name;
+                                }
+                            ],                               
                             'amount',
-                            'sale_price',
-                            'customer_id',
-                            'user_id',
+                            [
+                                'attribute' => 'sale_price',
+                                'contentOptions' => ['style' => 'text-align:right;'],
+                                'value' => function ($model) {
+                                    return Yii::$app->formatter->asCurrency($model->sale_price);
+                                }
+                            ],                               
+                            [
+                                'attribute' => 'customer_id',
+                                'format' => 'raw',
+                                'filter' => Html::activeDropDownList($searchModel, 'customer_id', ArrayHelper::map(Customer::find()->all(), 'id', 'customer_name'), ['prompt' => 'Semua Pelanggan', 'class' => 'form-control']),
+                                'value' => function ($model) {
+                                    return $model->customer->customer_name;
+                                }
+                            ],                               
+                            // 'user_id',
 
                             ['class' => 'hail812\adminlte3\yii\grid\ActionColumn'],
                         ],

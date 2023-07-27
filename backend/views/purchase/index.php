@@ -1,8 +1,12 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use common\models\Product;
+use common\models\Supplier;
+
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\PurchaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -31,11 +35,31 @@ $this->params['breadcrumbs'][] = $this->title;
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 
-                            'product_id',
+                            [
+                                'attribute' => 'product_id',
+                                'format' => 'raw',
+                                'filter' => Html::activeDropDownList($searchModel, 'product_id', ArrayHelper::map(Product::find()->all(), 'id', 'product_name'), ['prompt' => 'Semua Barang', 'class' => 'form-control']),
+                                'value' => function ($model) {
+                                    return $model->product->product_name;
+                                }
+                            ],                               
                             'amount',
-                            'purchase_price',
-                            'supplier_id',
-                            'user_id',
+                            [
+                                'attribute' => 'purchase_price',
+                                'contentOptions' => ['style' => 'text-align:right;'],
+                                'value' => function ($model) {
+                                    return Yii::$app->formatter->asCurrency($model->purchase_price);
+                                }
+                            ],                               
+                            [
+                                'attribute' => 'supplier_id',
+                                'format' => 'raw',
+                                'filter' => Html::activeDropDownList($searchModel, 'supplier_id', ArrayHelper::map(Supplier::find()->all(), 'id', 'supplier_name'), ['prompt' => 'Semua Pemasok', 'class' => 'form-control']),
+                                'value' => function ($model) {
+                                    return $model->supplier->supplier_name;
+                                }
+                            ],                               
+                            // 'user_id',
 
                             ['class' => 'hail812\adminlte3\yii\grid\ActionColumn'],
                         ],

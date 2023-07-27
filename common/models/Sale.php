@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "sale".
@@ -50,7 +51,7 @@ class Sale extends \yii\db\ActiveRecord
             [['sale_price'], 'number'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -62,7 +63,7 @@ class Sale extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'amount' => 'Jumlah',
-            'sale_price' => 'Harga Jual',
+            'sale_price' => 'Harga Jual per Unit',
             'product_id' => 'Barang',
             'customer_id' => 'Pelanggan',
             'user_id' => 'Pengguna',

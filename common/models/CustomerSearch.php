@@ -4,6 +4,7 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use common\models\Customer;
 
 /**
@@ -67,5 +68,12 @@ class CustomerSearch extends Customer
             ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
+    }
+
+    public function getCustomerList(){
+    	$query = ArrayHelper::map(Customer::find()->orderBy(['customer_name' => SORT_ASC])->all(), 'id', function($model){
+            return $model->customer_name;
+    	});
+    	return $query;
     }
 }

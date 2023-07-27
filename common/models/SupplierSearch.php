@@ -70,7 +70,7 @@ class SupplierSearch extends Supplier
     }
 
     public function getSupplierList(){
-    	$query = ArrayHelper::map(Supplier::find()->all(), 'id', function($model){
+    	$query = ArrayHelper::map(Supplier::find()->orderBy(['supplier_name' => SORT_ASC])->all(), 'id', function($model){
     			return $model->supplier_name;
     	});
     	return $query;

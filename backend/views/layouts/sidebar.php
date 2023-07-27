@@ -16,10 +16,10 @@
                             ['label' => 'Dashboard',  'icon' => 'chart-bar', 'url' => ['dashboard/index']],
                             ['label' => 'Data Master', 'header' => true],
                             ['label' => 'Barang',  'icon' => 'boxes', 'url' => ['product/index']],
-                            ['label' => 'Pemasok',  'icon' => 'users', 'url' => ['supplier/index']],
+                            ['label' => 'Pemasok',  'icon' => 'user-friends', 'url' => ['supplier/index']],
                             ['label' => 'Pelanggan', 'icon' => 'users', 'url' => ['customer/index']],
                             ['label' => 'Transaksi', 'header' => true],
-                            ['label' => 'Pembelian', 'icon' => 'shopping-cart', 'url' => ['purchase/index']],
+                            ['label' => 'Pembelian', 'icon' => 'truck-loading', 'url' => ['purchase/index']],
                             ['label' => 'Penjualan', 'icon' => 'shopping-cart', 'url' => ['sale/index']],
                         ],
                     ]);
