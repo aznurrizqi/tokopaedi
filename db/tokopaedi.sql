@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2023 at 11:38 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.28
+-- Generation Time: Jul 28, 2023 at 08:22 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,75 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auth_assignment`
---
-
-CREATE TABLE `auth_assignment` (
-  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `auth_assignment`
---
-
-INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', '1', 1655998715),
-('admin', '3', 1656000448),
-('superadmin', '2', 1655998742);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auth_item`
---
-
-CREATE TABLE `auth_item` (
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `type` smallint(6) NOT NULL,
-  `description` text COLLATE utf8_unicode_ci DEFAULT NULL,
-  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `data` blob DEFAULT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `auth_item`
---
-
-INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('admin', 1, 'can update data', NULL, NULL, 1655998619, 1655998619),
-('superadmin', 1, 'can manage user and update data', NULL, NULL, 1655998595, 1655998595);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auth_item_child`
---
-
-CREATE TABLE `auth_item_child` (
-  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `auth_rule`
---
-
-CREATE TABLE `auth_rule` (
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `data` blob DEFAULT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `customer`
 --
 
@@ -104,7 +35,7 @@ CREATE TABLE `customer` (
   `email` varchar(255) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customer`
@@ -125,45 +56,6 @@ INSERT INTO `customer` (`id`, `customer_name`, `address`, `phone`, `email`, `cre
 -- --------------------------------------------------------
 
 --
--- Table structure for table `menu`
---
-
-CREATE TABLE `menu` (
-  `id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL,
-  `parent` int(11) DEFAULT NULL,
-  `route` varchar(255) DEFAULT NULL,
-  `order` int(11) DEFAULT NULL,
-  `data` blob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `migration`
---
-
-CREATE TABLE `migration` (
-  `version` varchar(180) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `migration`
---
-
-INSERT INTO `migration` (`version`, `apply_time`) VALUES
-('m000000_000000_base', 1655997839),
-('m140506_102106_rbac_init', 1655998273),
-('m140602_111327_create_menu_table', 1655997845),
-('m160312_050000_create_user', 1655997845),
-('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1655998273),
-('m180523_151638_rbac_updates_indexes_without_prefix', 1655998273),
-('m200409_110543_rbac_update_mssql_trigger', 1655998273);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `product`
 --
 
@@ -175,7 +67,7 @@ CREATE TABLE `product` (
   `user_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
@@ -208,23 +100,43 @@ CREATE TABLE `purchase` (
   `user_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `purchase`
 --
 
 INSERT INTO `purchase` (`id`, `amount`, `purchase_price`, `product_id`, `supplier_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 20, '200000', 3, 2, 4, 1690443516, 1690443516),
-(2, 5, '2800000', 4, 6, 4, 1690444230, 1690444230),
-(3, 50, '200000', 5, 5, 4, 1690444630, 1690444630),
-(4, 50, '300000', 6, 5, 4, 1690444645, 1690444645),
-(5, 20, '600000', 7, 11, 4, 1690444825, 1690444825),
-(6, 30, '4000000', 8, 9, 4, 1690444863, 1690444863),
-(7, 10, '10000000', 9, 4, 4, 1690444885, 1690444885),
-(8, 100, '200000', 10, 6, 4, 1690444924, 1690444924),
-(9, 10, '1300000', 11, 7, 4, 1690445069, 1690445069),
-(12, 100, '200000', 12, 10, 4, 1690446141, 1690446141);
+(1, 20, 200000, 3, 2, 4, 1690443516, 1690443516),
+(2, 5, 2800000, 4, 6, 4, 1690444230, 1690444230),
+(3, 50, 200000, 5, 5, 4, 1690444630, 1690444630),
+(4, 50, 300000, 6, 5, 4, 1690444645, 1690444645),
+(5, 20, 600000, 7, 11, 4, 1690444825, 1690444825),
+(6, 30, 4000000, 8, 9, 4, 1690444863, 1690444863),
+(7, 10, 10000000, 9, 4, 4, 1690444885, 1690444885),
+(8, 100, 200000, 10, 6, 4, 1690444924, 1690444924),
+(9, 10, 1300000, 11, 7, 4, 1690445069, 1690445069),
+(12, 100, 200000, 12, 10, 4, 1690446141, 1690446141);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role`
+--
+
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL,
+  `role_name` varchar(255) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `role_name`, `description`) VALUES
+(1, 'admin', ''),
+(2, 'inputer', '');
 
 -- --------------------------------------------------------
 
@@ -241,33 +153,33 @@ CREATE TABLE `sale` (
   `user_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sale`
 --
 
 INSERT INTO `sale` (`id`, `amount`, `sale_price`, `product_id`, `customer_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 1, '250000', 3, 2, 4, 1690449785, 1690449785),
-(2, 5, '2750000', 4, 1, 4, 1690449997, 1690450179),
-(3, 5, '230000', 5, 3, 4, 1690450073, 1690450073),
-(4, 2, '330000', 6, 4, 4, 1690450121, 1690450121),
-(5, 1, '630000', 7, 5, 4, 1690450133, 1690450133),
-(6, 1, '4200000', 8, 6, 4, 1690450155, 1690450155),
-(7, 1, '10100000', 9, 7, 4, 1690450231, 1690450231),
-(8, 5, '230000', 10, 8, 4, 1690450253, 1690450253),
-(9, 1, '1400000', 11, 9, 4, 1690450266, 1690450266),
-(10, 10, '210000', 12, 10, 4, 1690450285, 1690450285),
-(11, 2, '620000', 7, 8, 4, 1690450388, 1690450388),
-(12, 1, '10050000', 9, 3, 4, 1690450410, 1690450410),
-(13, 2, '1300000', 11, 2, 4, 1690450432, 1690450432),
-(14, 3, '4100000', 8, 4, 4, 1690450473, 1690450473),
-(15, 2, '2200000', 10, 10, 4, 1690450489, 1690450489),
-(16, 1, '11000000', 9, 9, 4, 1690450552, 1690450552),
-(17, 3, '220000', 3, 8, 4, 1690450581, 1690450590),
-(18, 3, '250000', 12, 1, 4, 1690450623, 1690450623),
-(19, 1, '1110000', 9, 2, 4, 1690450644, 1690450644),
-(20, 5, '330000', 6, 1, 4, 1690450674, 1690450674);
+(1, 1, 250000, 3, 2, 4, 1690449785, 1690449785),
+(2, 5, 2750000, 4, 1, 4, 1690449997, 1690450179),
+(3, 5, 230000, 5, 3, 4, 1690450073, 1690450073),
+(4, 2, 330000, 6, 4, 4, 1690450121, 1690450121),
+(5, 1, 630000, 7, 5, 4, 1690450133, 1690450133),
+(6, 1, 4200000, 8, 6, 4, 1690450155, 1690450155),
+(7, 1, 10100000, 9, 7, 4, 1690450231, 1690450231),
+(8, 5, 230000, 10, 8, 4, 1690450253, 1690450253),
+(9, 1, 1400000, 11, 9, 4, 1690450266, 1690450266),
+(10, 10, 210000, 12, 10, 4, 1690450285, 1690450285),
+(11, 2, 620000, 7, 8, 4, 1690450388, 1690450388),
+(12, 1, 10050000, 9, 3, 4, 1690450410, 1690450410),
+(13, 2, 1300000, 11, 2, 4, 1690450432, 1690450432),
+(14, 3, 4100000, 8, 4, 4, 1690450473, 1690450473),
+(15, 2, 2200000, 10, 10, 4, 1690450489, 1690450489),
+(16, 1, 11000000, 9, 9, 4, 1690450552, 1690450552),
+(17, 3, 220000, 3, 8, 4, 1690450581, 1690450590),
+(18, 3, 250000, 12, 1, 4, 1690450623, 1690450623),
+(19, 1, 1110000, 9, 2, 4, 1690450644, 1690450644),
+(20, 5, 330000, 6, 1, 4, 1690450674, 1690450674);
 
 -- --------------------------------------------------------
 
@@ -282,7 +194,7 @@ CREATE TABLE `supplier` (
   `phone` varchar(255) NOT NULL,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `supplier`
@@ -308,16 +220,17 @@ INSERT INTO `supplier` (`id`, `supplier_name`, `address`, `phone`, `created_at`,
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `username` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `auth_key` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
-  `password_hash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password_reset_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `address` text COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(32) NOT NULL,
+  `auth_key` varchar(32) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `password_reset_token` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `email` varchar(255) NOT NULL,
   `status` smallint(6) NOT NULL DEFAULT 10,
+  `role_id` int(11) NOT NULL DEFAULT 2,
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -326,60 +239,19 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `first_name`, `last_name`, `phone`, `address`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(4, 'zidan', 'tO8TvMRIc4TVr52D1vBL_VBbgX6hmvKw', '$2y$13$rWob1uR4W03jjP1HCmQ5QuS8pr0eUOgTJOmYJAtv9f99Rh9YD8tpK', NULL, '', '', '', '', 'zidan@gmail.com', 10, 1690354990, 1690354990),
-(5, 'afif', 'dydn6HsYmMoWtTASr5qXVTaRgxz_TM4q', '$2y$13$llQj2YE7m8WZMkHwY4Cc1ukghu00w9UHNRwaleCgB6DM7fTaONgYe', NULL, '', '', '', '', 'afif@gmail.com', 10, 1690431745, 1690431745);
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `first_name`, `last_name`, `phone`, `address`, `email`, `status`, `role_id`, `created_at`, `updated_at`) VALUES
+(4, 'zidan', 'tO8TvMRIc4TVr52D1vBL_VBbgX6hmvKw', '$2y$13$rWob1uR4W03jjP1HCmQ5QuS8pr0eUOgTJOmYJAtv9f99Rh9YD8tpK', NULL, '', '', '', '', 'zidan@gmail.com', 10, 2, 1690354990, 1690354990),
+(5, 'afif', 'dydn6HsYmMoWtTASr5qXVTaRgxz_TM4q', '$2y$13$llQj2YE7m8WZMkHwY4Cc1ukghu00w9UHNRwaleCgB6DM7fTaONgYe', NULL, '', '', '', '', 'afif@gmail.com', 10, 1, 1690431745, 1690431745);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `auth_assignment`
---
-ALTER TABLE `auth_assignment`
-  ADD PRIMARY KEY (`item_name`,`user_id`),
-  ADD KEY `idx-auth_assignment-user_id` (`user_id`);
-
---
--- Indexes for table `auth_item`
---
-ALTER TABLE `auth_item`
-  ADD PRIMARY KEY (`name`),
-  ADD KEY `rule_name` (`rule_name`),
-  ADD KEY `idx-auth_item-type` (`type`);
-
---
--- Indexes for table `auth_item_child`
---
-ALTER TABLE `auth_item_child`
-  ADD PRIMARY KEY (`parent`,`child`),
-  ADD KEY `child` (`child`);
-
---
--- Indexes for table `auth_rule`
---
-ALTER TABLE `auth_rule`
-  ADD PRIMARY KEY (`name`);
-
---
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `menu`
---
-ALTER TABLE `menu`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `parent` (`parent`);
-
---
--- Indexes for table `migration`
---
-ALTER TABLE `migration`
-  ADD PRIMARY KEY (`version`);
 
 --
 -- Indexes for table `product`
@@ -396,6 +268,12 @@ ALTER TABLE `purchase`
   ADD KEY `user_id` (`user_id`),
   ADD KEY `supplier_id` (`supplier_id`),
   ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sale`
@@ -416,7 +294,8 @@ ALTER TABLE `supplier`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -429,12 +308,6 @@ ALTER TABLE `customer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `menu`
---
-ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
@@ -445,6 +318,12 @@ ALTER TABLE `product`
 --
 ALTER TABLE `purchase`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sale`
@@ -462,36 +341,11 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `auth_assignment`
---
-ALTER TABLE `auth_assignment`
-  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `auth_item`
---
-ALTER TABLE `auth_item`
-  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Constraints for table `auth_item_child`
---
-ALTER TABLE `auth_item_child`
-  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `menu`
---
-ALTER TABLE `menu`
-  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `menu` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product`
@@ -514,6 +368,12 @@ ALTER TABLE `sale`
   ADD CONSTRAINT `sale_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `sale_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`),
   ADD CONSTRAINT `sale_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
