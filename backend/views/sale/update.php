@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $model common\models\Sale */
 
-$this->title = 'Update Penjualan: ' . $model->id;
+$this->title = 'Update Penjualan: KODE' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Penjualan', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';

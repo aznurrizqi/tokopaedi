@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Supplier */
 
-$this->title = $model->supplier_name;
+$this->title = 'Detail Pemasok: '.$model->supplier_name;
 $this->params['breadcrumbs'][] = ['label' => 'Pemasok', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);

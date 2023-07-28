@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Purchase */
 
-$this->title = $model->id;
+$this->title = 'Detail Pembelian: KODE' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Purchases', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -30,11 +30,33 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            'product_id',
+                            [
+                                'attribute' => 'product_id',
+                                'format' => 'raw',
+                                'value' => function ($model) {
+                                    return $model->product->product_name;
+                                }
+                            ],  
                             'amount',
-                            'purchase_price',
-                            'supplier_id',
-                            'user_id',
+                            [
+                                'attribute' => 'purchase_price',
+                                'value' => function ($model) {
+                                    return Yii::$app->formatter->asCurrency($model->purchase_price);
+                                }
+                            ],                               
+                            [
+                                'attribute' => 'supplier_id',
+                                'format' => 'raw',
+                                'value' => function ($model) {
+                                    return $model->supplier->supplier_name;
+                                }
+                            ],                               
+                            [
+                                'attribute' => 'user_id',
+                                'value' => function ($model) {
+                                    return $model->user->username;
+                                }
+                            ], 
                         ],
                     ]) ?>
                 </div>
