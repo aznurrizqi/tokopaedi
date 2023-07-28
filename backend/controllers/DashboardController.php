@@ -9,6 +9,7 @@ use common\models\Sale;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ArrayDataProvider;
 
 /**
  * DashboardController used for reporting.
@@ -49,7 +50,30 @@ class DashboardController extends Controller
      */
     public function actionIndex()
     {
+        $modelProduct = new Product();
+        $monthlyReport = $modelProduct->getMonthlyReport();
+        $ytdReport = $modelProduct->getYtdReport();
+        $yoyReport = $modelProduct->getYoyReport();
+
+        $monthlyReportDataProvider = new ArrayDataProvider([
+            'models' => $monthlyReport,
+            'sort' => false,
+        ]);
+
+        $ytdReportDataProvider = new ArrayDataProvider([
+            'models' => $ytdReport,
+            'sort' => false,
+        ]);
+
+        $yoyReportDataProvider = new ArrayDataProvider([
+            'models' => $yoyReport,
+            'sort' => false,
+        ]);
+
         return $this->render('index', [
+            'monthlyReportDataProvider' => $monthlyReportDataProvider,
+            'ytdReportDataProvider' => $ytdReportDataProvider,
+            'yoyReportDataProvider' => $yoyReportDataProvider,
         ]);
     }
 }
