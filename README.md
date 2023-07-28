@@ -10,7 +10,8 @@ INSTALLATION STEP
 2. Run ```composer update``` in root project directory.
 3. Export database file from ```./db``` directory.
 4. Change database configuration in ```common/config/main-local.php```.
-5. Access backend using url ```http://localhost/tokopaedi/backend/web```.
+5. Access backend page using url ```http://localhost/tokopaedi/backend/web```.
+6. Login using ```user:zidan pass:12345678```.
 
 
 DIRECTORY STRUCTURE
